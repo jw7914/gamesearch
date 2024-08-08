@@ -13,6 +13,7 @@ dist-ssr
 *.local
 .env
 tempCodeRunnerFile.js
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

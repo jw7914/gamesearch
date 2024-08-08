@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 function Genres() {
     const genres = [
       { id: 36, name: 'MOBA' },
@@ -28,10 +29,10 @@ function Genres() {
     return (
       <div>
         {genres.map((el) => (
-        <li className="list-group-item bg-dark">
-            <a key={el.id} href={`#genre-${el.name}`} style={{color: "white"}}>
+        <li className="list-group-item bg-dark" style={{borderColor: "black", borderWidth: "2px", marginTop: "0.5rem", textAlign: "center", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(0, 0, 0, 0.1) inset"}}>
+           <Link to={`/genre-${el.name}`} key={el.id} style={{color: "white", textDecoration: "none"}}>
                 {el.name}
-            </a>
+           </Link>
         </li>
         ))}
       </div>
