@@ -1,43 +1,70 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 function Genres() {
-    const genres = [
-      { id: 36, name: 'MOBA' },
-      { id: 2, name: 'Point-and-click' },
-      { id: 4, name: 'Fighting' },
-      { id: 5, name: 'Shooter' },
-      { id: 7, name: 'Music' },
-      { id: 8, name: 'Platform' },
-      { id: 9, name: 'Puzzle' },
-      { id: 10, name: 'Racing' },
-      { id: 11, name: 'Real Time Strategy (RTS)' },
-      { id: 12, name: 'Role-playing (RPG)' },
-      { id: 13, name: 'Simulator' },
-      { id: 14, name: 'Sport' },
-      { id: 15, name: 'Strategy' },
-      { id: 16, name: 'Turn-based strategy (TBS)' },
-      { id: 24, name: 'Tactical' },
-      { id: 25, name: "Hack and slash/Beat 'em up" },
-      { id: 26, name: 'Quiz/Trivia' },
-      { id: 30, name: 'Pinball' },
-      { id: 31, name: 'Adventure' },
-      { id: 32, name: 'Indie' },
-      { id: 33, name: 'Arcade' },
-      { id: 34, name: 'Visual Novel' },
-      { id: 35, name: 'Card & Board Game' },
-    ];
-  
-    return (
-      <div>
+  const clientId = import.meta.env.VITE_CLIENT_ID;
+  const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+  const [genres, setGenres] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const options = {
+    method: 'POST',
+    headers: {
+        'Client-ID': clientId, // Replace with actual Client-ID
+        'Authorization': `Bearer ${accessToken}`, // Replace with actual access token
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: `fields name; limit 500;`,
+  };
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await fetch('/api/genres', options); // Update path if needed
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setGenres(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGenres();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <ul>
         {genres.map((el) => (
-        <li className="list-group-item bg-dark" style={{borderColor: "black", borderWidth: "2px", marginTop: "0.5rem", textAlign: "center", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(0, 0, 0, 0.1) inset"}}>
-           <Link to={`/genre-${el.name}`} key={el.id} style={{color: "white", textDecoration: "none"}}>
-                {el.name}
-           </Link>
-        </li>
+          <li
+            key={el.id}
+            className="list-group-item bg-dark"
+            style={{
+              borderColor: "black",
+              borderWidth: "2px",
+              marginTop: "0.5rem",
+              textAlign: "center",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2), 0 -1px 2px rgba(0, 0, 0, 0.1) inset",
+            }}
+          >
+            <Link to={`/genre-${el.name}`} style={{ color: "white", textDecoration: "none" }}>
+              {el.name}
+            </Link>
+          </li>
         ))}
-      </div>
-    );
-  }
-  
+      </ul>
+    </div>
+  );
+}
+
 export default Genres;
   

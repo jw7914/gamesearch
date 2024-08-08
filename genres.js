@@ -14,7 +14,7 @@ export const fetchGenres = async () => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: `fields name; limit 500;`
+        body: `fields name; limit 500;`,
     };
 
     try {
@@ -28,4 +28,9 @@ export const fetchGenres = async () => {
         console.error('Error fetching genres:', error);
         return []; // Return an empty array if there is an error
     }
+
 };
+
+fetchGenres().then(genres => {
+    console.log(genres);
+});
