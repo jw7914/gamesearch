@@ -1,8 +1,8 @@
 function Home() {
     return (
-      <>
+    <>
         <h1>Latest Games</h1>
-      </>
+    </>
     );
   }
   
