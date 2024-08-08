@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Genres from "../Genres";
 
 function Navbar() {
   return (
@@ -90,23 +91,8 @@ function Navbar() {
           ></button>
         </div>
         <div className="offcanvas-body">
-          <div>Some placeholder content for the offcanvas.</div>
-          <ul className="list-unstyled">
-            <li>
-              <a href="#" className="text-decoration-none">
-                Link 1
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-decoration-none">
-                Link 2
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-decoration-none">
-                Link 3
-              </a>
-            </li>
+          <ul className="list-group bg-dark list-group-numbered">
+            <Genres></Genres>
           </ul>
         </div>
       </div>
